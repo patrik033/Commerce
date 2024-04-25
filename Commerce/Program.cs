@@ -1,5 +1,12 @@
 using Commerce.Data;
+using Commerce.Email.Register;
+using Commerce.Email.Token;
+using Commerce.Extensions;
+using Commerce.Models.Identity;
 using Commerce.Models.Pagination;
+using Commerce.Password;
+using Commerce.Services.Email;
+using Commerce.Services.Identity.Token;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -8,11 +15,39 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 
 builder.Services.AddControllers();
+builder.Services.AddHttpContextAccessor();
 
-builder.Services.AddDbContext<AppDbContext>(options =>
-{
-    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
-});
+
+builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+
+
+
+builder.Services.AddSingleton<ISendGridEmailRegisterService, SendGridEmailRegisterService>();
+builder.Services.AddSingleton<ISendGridEmailPaymentSuccess, SendGridEmailPaymentSuccess>();
+await builder.Services.ConfigureAzure(builder.Configuration);
+
+
+
+//mailprovider for registering users
+builder.Services.AddSingleton<ISendGridEmailRegister, SendGridEmailRegister>();
+//mailprovider for tokens
+builder.Services.AddSingleton<ISendGridEmailTokens, SendGridEmailTokens>();
+//injections for auth services
+builder.Services.ConfigureAuthInjections();
+
+//configurations for reset password and confirm email
+builder.Services.AddTransient<CustomEmailConfirmationTokenProvider<ApplicationUser>>();
+builder.Services.AddTransient<PasswordResetTokenProvider<ApplicationUser>>();
+builder.Services.AddScoped<EmailRegistrationSuccessfullConsumer>();
+builder.Services.AddScoped<ITokenService, TokenService>();
+
+builder.Services.ConfigureSqlContext(builder.Configuration);
+builder.Services.ConfigureIdentity();
+builder.Services.ConfigureIdentityOptions();
+builder.Services.ConfigureAuthentication(builder.Configuration);
+
+
+
 
 builder.Services.AddCors(options =>
 {
@@ -50,6 +85,7 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 app.UseCors();
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();

@@ -46,10 +46,23 @@ namespace Commerce.Controllers
 
             return Ok(products);
         }
+
+
         [HttpGet("Drinks/{id}")]
         public async Task<IActionResult> GetSingleProduct(Guid id)
         {
             var getProductById = await _context.Products.FirstOrDefaultAsync(p => p.Id == id);
+            if (getProductById == null)
+            {
+                return NotFound();
+            }
+            return Ok(getProductById);
+        }
+
+        [HttpGet("DrinksNames/{id}")]
+        public async Task<IActionResult> GetSingleProductName(string id)
+        {
+            var getProductById = await _context.Products.FirstOrDefaultAsync(p => p.Name.ToUpper() == id.ToUpper());
             if (getProductById == null)
             {
                 return NotFound();

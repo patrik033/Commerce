@@ -4,6 +4,7 @@ using Commerce.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Commerce.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240423101337_addedIdentity")]
+    partial class addedIdentity
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -125,12 +128,6 @@ namespace Commerce.Migrations
                     b.Property<bool>("PhoneNumberConfirmed")
                         .HasColumnType("bit");
 
-                    b.Property<string>("RefreshToken")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("RefreshTokenExpiryTime")
-                        .HasColumnType("datetime2");
-
                     b.Property<string>("SecurityStamp")
                         .HasColumnType("nvarchar(max)");
 
@@ -158,17 +155,16 @@ namespace Commerce.Migrations
                         {
                             Id = "3a3e134a-2c3a-446f-86af-112d26fd2890",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "3f2025af-bd1e-4db3-aebc-115a17672954",
+                            ConcurrencyStamp = "fe7d84ef-6a66-4e6e-948d-b25bf18748b4",
                             Email = "admin.smiledentist@gmail.com",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
                             Name = "Admin",
                             NormalizedEmail = "ADMIN.SMILEDENTIST@GMAIL.COM",
                             NormalizedUserName = "ADMIN.SMILEDENTIST@GMAIL.COM",
-                            PasswordHash = "AQAAAAIAAYagAAAAEGWl5Gu8u/ste/lC0UH0ipRSkMQsHEPDR1iisMyMfLe4mGjfw5L8oTmDLbM2xXD13Q==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEK4wYUmV8DFuSdjSn0qo0wCbpbzlyn6RXif+bQfqeL/gFjFUF181RM0GMFV8WDLTqQ==",
                             PhoneNumberConfirmed = false,
-                            RefreshTokenExpiryTime = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            SecurityStamp = "1f81045f-ff21-4278-a8d4-d05bcdf36035",
+                            SecurityStamp = "0a79d111-e657-4f8d-9cab-e2683ee28ecd",
                             TwoFactorEnabled = false,
                             UserName = "admin.smiledentist@gmail.com"
                         },
@@ -176,17 +172,16 @@ namespace Commerce.Migrations
                         {
                             Id = "9a3e139a-1c7a-446f-86af-112d26fd2899",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "bb09f074-69e4-4332-b675-1a76169388d5",
+                            ConcurrencyStamp = "bc165aee-e7fd-4008-87f0-b54dd7efe475",
                             Email = "customer.smiledentist@gmail.com",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
                             Name = "Erik",
                             NormalizedEmail = "CUSTOMER.SMILEDENTIST@GMAIL.COM",
                             NormalizedUserName = "CUSTOMER.SMILEDENTIST@GMAIL.COM",
-                            PasswordHash = "AQAAAAIAAYagAAAAEJSpgWWcE9bYUwPGUz5kbd79Xt2JlO95hqXf2fCHL3dUDJBHTDHFohGJjkheDF3W9Q==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEGNweOBgXPt/LZOAeJapKKCSq2pTeLtzAsUYMExwXsUnBZU8alfbJLPo7b9bQGXCDA==",
                             PhoneNumberConfirmed = false,
-                            RefreshTokenExpiryTime = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            SecurityStamp = "51d28d83-b588-4058-871a-8518439415a3",
+                            SecurityStamp = "df13f3b7-fa31-419b-b99c-ddcfeeb060be",
                             TwoFactorEnabled = false,
                             UserName = "customer.smiledentist@gmail.com"
                         });
