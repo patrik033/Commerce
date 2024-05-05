@@ -1,9 +1,6 @@
 ﻿using Commerce.Data;
 using Commerce.Email.Azure;
-using Commerce.Email.Token;
-using Commerce.Models.Identity;
-using Commerce.Password;
-using Commerce.Services.Identity;
+
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -23,78 +20,35 @@ namespace Commerce.Extensions
             });
         }
         //identity
-        public static void ConfigureIdentity(this IServiceCollection services)
-        {
-            services.AddIdentity<ApplicationUser, IdentityRole>(config =>
-            {
-            }).AddEntityFrameworkStores<AppDbContext>();
-        }
+      
         //identity options
-        public static void ConfigureIdentityOptions(this IServiceCollection services)
-        {
-            services.Configure<IdentityOptions>(options =>
-            {
-                options.SignIn.RequireConfirmedEmail = true;
+        //public static void ConfigureIdentityOptions(this IServiceCollection services)
+        //{
+        //    services.Configure<IdentityOptions>(options =>
+        //    {
+        //        options.SignIn.RequireConfirmedEmail = true;
 
-                options.Tokens.ProviderMap.Add("CustomEmailConfirmation",
-                    new TokenProviderDescriptor(
-                        typeof(CustomEmailConfirmationTokenProvider<ApplicationUser>)));
+        //        options.Tokens.ProviderMap.Add("CustomEmailConfirmation",
+        //            new TokenProviderDescriptor(
+        //                typeof(CustomEmailConfirmationTokenProvider<ApplicationUser>)));
 
-                options.Tokens.EmailConfirmationTokenProvider = "CustomEmailConfirmation";
+        //        options.Tokens.EmailConfirmationTokenProvider = "CustomEmailConfirmation";
 
-                options.Tokens.ProviderMap.Add("PasswordReset",
-                    new TokenProviderDescriptor(
-                        typeof(PasswordResetTokenProvider<ApplicationUser>)));
+        //        options.Tokens.ProviderMap.Add("PasswordReset",
+        //            new TokenProviderDescriptor(
+        //                typeof(PasswordResetTokenProvider<ApplicationUser>)));
 
-                options.Tokens.PasswordResetTokenProvider = "PasswordReset";
+        //        options.Tokens.PasswordResetTokenProvider = "PasswordReset";
 
-                //options.Password.RequireDigit = true;
-                //options.Password.RequiredLength = 6;
-                //options.Password.RequireLowercase = true;
-                //options.Password.RequireUppercase = true;
-                //options.Password.RequireNonAlphanumeric = true;
-            });
-        }
+        //        //options.Password.RequireDigit = true;
+        //        //options.Password.RequiredLength = 6;
+        //        //options.Password.RequireLowercase = true;
+        //        //options.Password.RequireUppercase = true;
+        //        //options.Password.RequireNonAlphanumeric = true;
+        //    });
+        //}
         //authenticatíon options
-        public static void ConfigureAuthentication(this IServiceCollection services, IConfiguration configuration)
-        {
-            var key = configuration.GetValue<string>("ApiSettings:Secret");
-
-
-            services.AddAuthentication(options =>
-            {
-                options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-                options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-            })
-                .AddJwtBearer(options =>
-            {
-                options.RequireHttpsMetadata = false;
-                options.SaveToken = true;
-
-                options.TokenValidationParameters = new TokenValidationParameters
-                {
-                    ValidateIssuer = true,
-                    ValidateAudience = true,
-                    ValidateLifetime = true,
-                    ValidateIssuerSigningKey = true,
-                    ValidIssuer = "https://localhost:5001",
-                    ValidAudience = "https://localhost:5001",
-                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(key)),
-                };
-
-                options.Events = new JwtBearerEvents
-                {
-                    OnMessageReceived = ctx =>
-                    {
-                        ctx.Request.Cookies.TryGetValue("accessToken", out var accessToken);
-                        if(!string.IsNullOrEmpty(accessToken))
-                            ctx.Token = accessToken;
-
-                        return Task.CompletedTask;
-                    }
-                };
-            });
-        }
+       
 
 
         public static async Task ConfigureAzure(this IServiceCollection services, IConfiguration configuration)
@@ -151,16 +105,7 @@ namespace Commerce.Extensions
             });
         }
 
-        public static void ConfigureAuthInjections(this IServiceCollection services)
-        {
-            services.AddScoped<IUserRegistrationService, UserRegistrationService>();
-            services.AddScoped<IUserLoginService, UserLoginService>();
-            services.AddScoped<IConfirmAccountService, ConfirmAccountService>();
-            services.AddScoped<IUpdateAccount, UpdateAccount>();
-            services.AddScoped<IResetService, ResetService>();
-            services.AddScoped<IRefreshTokenService, RefreshTokenService>();
-            services.AddScoped<IRevokeToken, RevokeTokenService>();
-        }
+      
 
 
 

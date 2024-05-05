@@ -1,6 +1,4 @@
 ﻿using AutoMapper;
-using Commerce.Models.Email;
-using Commerce.Models.Identity;
 
 namespace Commerce.Profiles
 {
@@ -8,7 +6,7 @@ namespace Commerce.Profiles
     {
         public MappingProfiles()
         {
-            CreateMap<ApplicationUser, EmailConfirmationMessage>().ReverseMap();
+            //CreateMap<ApplicationUser, EmailConfirmationMessage>().ReverseMap();
 
         }
     }

@@ -1,7 +1,7 @@
 ﻿
 
 using Commerce.Email.Azure;
-using Commerce.Models.Email;
+
 
 
 namespace Commerce.Services.Email
@@ -16,16 +16,16 @@ namespace Commerce.Services.Email
             _azureKeyVaultKey = azureKeyVaultKey;
         }
 
-        public async Task Consume(EmailConfirmationMessage context)
-        {
-            var data = context;
-            var sendGridKey = await _azureKeyVaultKey.GetSendgridSecretAsync();
-            var from = await _azureKeyVaultKey.GetSenderEmailSecretAsync();
+        //public async Task Consume(EmailConfirmationMessage context)
+        //{
+        //    var data = context;
+        //    var sendGridKey = await _azureKeyVaultKey.GetSendgridSecretAsync();
+        //    var from = await _azureKeyVaultKey.GetSenderEmailSecretAsync();
 
-            if (data != null && sendGridKey != null && from != null)
-            {
-                var result = await _sendGridEmailRegisterService.SendAsync(from, data.Email, "Confirm your email", data.EmailToken, data.UserName);
-            }
-        }
+        //    if (data != null && sendGridKey != null && from != null)
+        //    {
+        //        var result = await _sendGridEmailRegisterService.SendAsync(from, data.Email, "Confirm your email", data.EmailToken, data.UserName);
+        //    }
+        //}
     }
 }

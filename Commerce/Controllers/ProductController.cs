@@ -38,7 +38,7 @@ namespace Commerce.Controllers
 
 
         [HttpGet("DrinksPaged")]
-        public async Task<IActionResult> GetPagedDrinks([FromQuery] ProductParameters productParameters,[FromQuery] List<string> categoryName)
+        public async Task<IActionResult> GetPagedDrinks([FromQuery] ProductParameters productParameters,[FromQuery] List<string> ? categoryName)
         {
             var products = await _pagedRepo.GetProducts(productParameters,categoryName);
 

@@ -1,13 +1,13 @@
-﻿using Commerce.Data.SeedConfigurations.IdentitySeeders;
+﻿
 using Commerce.Data.SeedConfigurations.ProductSeeders;
 using Commerce.Models;
-using Commerce.Models.Identity;
+
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 namespace Commerce.Data
 {
-    public class AppDbContext : IdentityDbContext<ApplicationUser>
+    public class AppDbContext : DbContext
     {
 
 
@@ -20,9 +20,7 @@ namespace Commerce.Data
         public  DbSet<Product> Products { get; set; }
         public DbSet<ProductCategory> ProductCategories { get; set; }
 
-        public DbSet<ApplicationUser> ApplicationUsers { get; set; }
-        public DbSet<Address> Addresses { get; set; }
-        public DbSet<BillingAddress> BillingAddress { get; set; }
+
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -41,10 +39,7 @@ namespace Commerce.Data
             modelBuilder.ApplyConfiguration(new ProductSpiceSallads());
            
             //identity seeding
-            modelBuilder.ApplyConfiguration(new IdentityRoleConfiguration());
-            modelBuilder.ApplyConfiguration(new ApplicationUserConfiguration());
-            modelBuilder.ApplyConfiguration(new AddressConfiguration());
-            modelBuilder.ApplyConfiguration(new IdentityUserRoleConfiguration());
+     
 
 
 
